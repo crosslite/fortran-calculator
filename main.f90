@@ -16,32 +16,34 @@ contains
         input = input__
 
         do while (index <= len_trim(input))
-            ch = input(index:index)
+                ch = input(index:index)
 
-            index = index + 1
-
-            select case(ch)
-            case ('+')
-                calculate = calculate + char_to_int(input(index:index))
-            case ('-')
-                calculate = calculate - char_to_int(input(index:index))
-            case ('*')
-                calculate = calculate * char_to_int(input(index:index))
-            case ('/')
-                calculate = calculate / char_to_int(input(index:index))
-            case ('0':'9')
-                index = index - 1
-                num = 0
-                do while (index <= len_trim(input) .and. is_digit(input(index:index)))
-                    num = num * 10 + char_to_int(input(index:index))
-                    index = index + 1
-                end do
-                calculate = calculate + num
-            case default
-                call out('syntax error')
-                call exit(1)
-            end select
-            index = index + 1
+                select case(ch)
+                case ('+')
+                        index = index + 1
+                        calculate = calculate + char_to_int(input(index:index))
+                case ('-')
+                        index = index + 1
+                        calculate = calculate - char_to_int(input(index:index))
+                case ('*')
+                        index = index + 1
+                        calculate = calculate * char_to_int(input(index:index))
+                case ('/')
+                        index = index + 1
+                        calculate = calculate / char_to_int(input(index:index))
+                case ('0':'9')
+                        num = 0
+                        do while (index <= len_trim(input) .and. is_digit(input(index:index)))
+                                num = num * 10 + char_to_int(input(index:index))
+                                index = index + 1
+                        end do
+                        calculate = calculate + num
+                        index = index - 1
+                case default
+                        call out('syntax error')
+                        call exit(1)
+                end select
+                index = index + 1
         end do
     end function
 
