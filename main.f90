@@ -21,22 +21,18 @@ contains
                 select case(ch)
                 case ('+')
                         index = index + 1
-                        calculate = calculate + char_to_int(input(index:index))
+                        calculate = calculate + get_num_from_str(input(index:100))
                 case ('-')
                         index = index + 1
-                        calculate = calculate - char_to_int(input(index:index))
+                        calculate = calculate - get_num_from_str(input(index:100))
                 case ('*')
                         index = index + 1
-                        calculate = calculate * char_to_int(input(index:index))
+                        calculate = calculate * get_num_from_str(input(index:100))
                 case ('/')
                         index = index + 1
-                        calculate = calculate / char_to_int(input(index:index))
+                        calculate = calculate / get_num_from_str(input(index:100))
                 case ('0':'9')
-                        num = 0
-                        do while (index <= len_trim(input) .and. is_digit(input(index:index)))
-                                num = num * 10 + char_to_int(input(index:index))
-                                index = index + 1
-                        end do
+                        num = get_num_from_str(input(index:100))
                         calculate = calculate + num
                         index = index - 1
                 case default
@@ -44,6 +40,17 @@ contains
                         call exit(1)
                 end select
                 index = index + 1
+        end do
+    end function
+
+    integer function get_num_from_str(string__)
+        character(*) :: string__
+        integer :: index__ = 0
+        get_num_from_str = 0
+        do while (index <= len_trim(input) .and. is_digit(input(index:index)))
+            get_num_from_str = get_num_from_str * 10 + char_to_int(input(index:index))
+            index = index + 1
+            index__ = index__ + 1
         end do
     end function
 
